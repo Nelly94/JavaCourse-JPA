@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="ARTIST")
@@ -25,6 +26,19 @@ public class Artist {
     @ManyToOne
     @JoinColumn(name="manager_id")
     private Manager manager;
+
+    @ManyToOne
+    @JoinColumn(name="fav_instrument_id")
+    private Instrument favouriteInstrument;
+
+    @ManyToMany
+    @JoinTable( name="ARTIST_INSTRUMENTS",
+            joinColumns = @JoinColumn(name="instrument_id"),
+            inverseJoinColumns = @JoinColumn(name="artist_id"))
+    private List<Instrument> playableInstruments;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private SacemRegistration sacemRegistration;
 
 
     public Artist(String firstName, String lastName, String bandName) {
@@ -79,5 +93,29 @@ public class Artist {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    public Instrument getFavouriteInstrument() {
+        return favouriteInstrument;
+    }
+
+    public void setFavouriteInstrument(Instrument favouriteInstrument) {
+        this.favouriteInstrument = favouriteInstrument;
+    }
+
+    public List<Instrument> getPlayableInstruments() {
+        return playableInstruments;
+    }
+
+    public void setPlayableInstruments(List<Instrument> playableInstruments) {
+        this.playableInstruments = playableInstruments;
+    }
+
+    public SacemRegistration getSacemRegistration() {
+        return sacemRegistration;
+    }
+
+    public void setSacemRegistration(SacemRegistration sacemRegistration) {
+        this.sacemRegistration = sacemRegistration;
     }
 }
