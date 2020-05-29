@@ -10,11 +10,22 @@ public class Manager extends Person{
     @OneToMany(mappedBy = "manager")
     private List<Artist> representedArtists;
 
+    @Column(name="budget")
+    private Integer budget;
+
     public List<Artist> getRepresentedArtists() {
         return representedArtists;
     }
 
     public void setRepresentedArtists(List<Artist> representedArtists) {
         this.representedArtists = representedArtists;
+    }
+
+    public Integer getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Integer budget) {
+        this.budget = budget;
     }
 }
