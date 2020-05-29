@@ -11,10 +11,10 @@ public class SacemRegistration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="code")
+    @Column(name="code", unique = true)
     private String code;
 
-    @Column(name="date")
+    @Column(name="date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
 
