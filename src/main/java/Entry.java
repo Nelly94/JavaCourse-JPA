@@ -36,7 +36,7 @@ public class Entry {
             transaction.commit();
 
             Media mediaFounded = em.find(Media.class, new MediaId("insoportable", MediaType.CD));
-            System.out.println("Media founded: " + mediaFounded.getName()+ " " + mediaFounded.getArtist());
+            System.out.println("Media founded: " + mediaFounded.getName()+ " " + mediaFounded.getArtist().getBandName());
 
 
         }catch(Exception e){
