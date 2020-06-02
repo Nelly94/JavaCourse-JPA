@@ -1,5 +1,4 @@
-import model.Artist;
-import model.Manager;
+import model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,13 +17,28 @@ public class Entry {
         manager.setLastName("Ramirez");
         artist.setManager(manager);
 
+        Instrument piano = new Instrument();
+        piano.setName("Piano");
+        piano.setType(InstrumentType.STRING);
+        artist.setFavouriteInstrument(piano);
+
+        Media media = new Media(new MediaId("insoportable", MediaType.CD));
+       media.setArtist(artist);
+
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
 
         try {
             em.persist(manager);
+            em.persist(piano);
             em.persist(artist);
+            em.persist(media);
             transaction.commit();
+
+            Media mediaFounded = em.find(Media.class, new MediaId("insoportable", MediaType.CD));
+            System.out.println("Media founded: " + mediaFounded.getName()+ " " + mediaFounded.getArtist());
+
+
         }catch(Exception e){
             transaction.rollback();
         }finally{

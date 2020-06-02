@@ -8,6 +8,10 @@ public class MediaId implements Serializable {
 
     public MediaType type;
 
+    public MediaId() {
+
+    }
+
     public MediaId(String name, MediaType type) {
         this.name = name;
         this.type = type;
