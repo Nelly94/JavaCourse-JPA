@@ -30,6 +30,9 @@ public class Artist extends Person{
     @OneToOne(fetch = FetchType.LAZY)
     private SacemRegistration sacemRegistration;
 
+    @OneToMany(mappedBy = "artist")
+    private List<Media> medias;
+
 
     public Artist(String firstName, String lastName, String bandName) {
         this.firstName = firstName;
