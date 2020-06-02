@@ -13,6 +13,11 @@ public class Manager extends Person{
     @Column(name="budget")
     private Integer budget;
 
+    public Manager(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public List<Artist> getRepresentedArtists() {
         return representedArtists;
     }

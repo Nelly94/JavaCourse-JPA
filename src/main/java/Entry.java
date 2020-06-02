@@ -12,14 +12,10 @@ public class Entry {
         EntityManager em = emf.createEntityManager();
 
         Artist artist = new Artist("Dani", "Martin", "El canto del loco");
-        Manager manager = new Manager();
-        manager.setFirstName("Alejandro");
-        manager.setLastName("Ramirez");
+        Manager manager = new Manager("Alejandro", "Perez");
         artist.setManager(manager);
 
-        Manager manager2 = new Manager();
-        manager2.setFirstName("Luis");
-        manager2.setLastName("Santos");
+        Manager manager2 = new Manager("Luis", "Garcia");
 
         Instrument piano = new Instrument();
         piano.setName("Piano");
@@ -27,7 +23,11 @@ public class Entry {
         artist.setFavouriteInstrument(piano);
 
         Media media = new Media(new MediaId("insoportable", MediaType.CD));
-       media.setArtist(artist);
+        media.setArtist(artist);
+
+        Artist ladygaga = new Artist("Lady", "Gaga", "Lady Gaga");
+        Manager rick = new Manager("Rick", "Smith");
+        ladygaga.setManager(rick);
 
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -50,11 +50,13 @@ public class Entry {
             Media m2 = em.merge(m);
             System.out.println(m2.getName());
 
-
+            em.persist(rick);
+            em.persist(ladygaga);
 
             transaction.commit();
 
         }catch(Exception e){
+            e.printStackTrace();
             transaction.rollback();
         }finally{
             em.close();
