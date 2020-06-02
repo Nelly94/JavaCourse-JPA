@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -8,7 +9,7 @@ import java.util.List;
 public class Manager extends Person{
 
     @OneToMany(mappedBy = "manager")
-    private List<Artist> representedArtists;
+    private List<Artist> representedArtists = new ArrayList<>();
 
     @Column(name="budget")
     private Integer budget;

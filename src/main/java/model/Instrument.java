@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Instrument {
     private InstrumentType type;
 
     @ManyToMany(mappedBy = "playableInstruments")
-    private List<Artist> artists;
+    private List<Artist> artists = new ArrayList<>();
 
     public Long getId() {
         return id;

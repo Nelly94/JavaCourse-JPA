@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,13 +26,13 @@ public class Artist extends Person{
     @JoinTable( name="ARTIST_INSTRUMENTS",
             joinColumns = @JoinColumn(name="instrument_id"),
             inverseJoinColumns = @JoinColumn(name="artist_id"))
-    private List<Instrument> playableInstruments;
+    private List<Instrument> playableInstruments = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     private SacemRegistration sacemRegistration;
 
     @OneToMany(mappedBy = "artist")
-    private List<Media> medias;
+    private List<Media> medias = new ArrayList<>();
 
 
     public Artist(String firstName, String lastName, String bandName) {
