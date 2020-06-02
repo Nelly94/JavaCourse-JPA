@@ -75,6 +75,14 @@ public class Entry {
                 System.out.println(a.getFirstName() + " " + a.getLastName());
             }
 
+            Query namedQuery = em.createNamedQuery("findByFavInstrumentType", Artist.class);
+            namedQuery.setParameter("instrumentType", InstrumentType.PERCUSSION);
+            List<Artist> foundArtists2 = query.getResultList();
+            for(Artist a : foundArtists2){
+                System.out.println(a.getFirstName() + " " + a.getLastName());
+            }
+
+
             transaction.commit();
 
         }catch(Exception e){
