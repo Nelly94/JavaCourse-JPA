@@ -22,13 +22,13 @@ public class Artist extends Person{
     @JoinColumn(name="fav_instrument_id")
     private Instrument favouriteInstrument;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name="ARTIST_INSTRUMENTS",
             joinColumns = @JoinColumn(name="instrument_id"),
             inverseJoinColumns = @JoinColumn(name="artist_id"))
     private List<Instrument> playableInstruments = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private SacemRegistration sacemRegistration;
 
     @OneToMany(mappedBy = "artist")
