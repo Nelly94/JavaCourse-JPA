@@ -1,10 +1,8 @@
 import model.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 public class Entry {
 
@@ -16,6 +14,10 @@ public class Entry {
         Manager manager = new Manager("Alejandro", "Perez");
         manager.getRepresentedArtists().add(artist);
         artist.setManager(manager);
+
+        Artist ladyGaga = new Artist("Lady", "Gaga", "");
+        manager.getRepresentedArtists().add(ladyGaga);
+        ladyGaga.setManager(manager);
 
         Instrument piano = new Instrument();
         piano.setName("Piano");
@@ -29,6 +31,13 @@ public class Entry {
         guitar.setType(InstrumentType.STRING);
         guitar.getArtists().add(artist);
         artist.getPlayableInstruments().add(guitar);
+
+        Instrument drums = new Instrument();
+        drums.setName("Drums");
+        drums.setType(InstrumentType.PERCUSSION);
+        drums.getArtists().add(ladyGaga);
+        ladyGaga.getPlayableInstruments().add(drums);
+        ladyGaga.setFavouriteInstrument(drums);
 
         Media media = new Media(new MediaId("insoportable", MediaType.CD));
         media.setArtist(artist);
@@ -46,6 +55,8 @@ public class Entry {
             em.persist(manager);
             em.persist(piano);
             em.persist(guitar);
+            em.persist(drums);
+            em.persist(ladyGaga);
             em.persist(artist);
             em.persist(media);
             em.persist(sRegistration);
@@ -57,6 +68,12 @@ public class Entry {
             media2.setArtist(artist);
             em.merge(media2);
 
+            Query query = em.createQuery("select a from Artist a where a.favouriteInstrument.type = :instrumentType");
+            query.setParameter("instrumentType", InstrumentType.PERCUSSION);
+            List<Artist> foundArtists = query.getResultList();
+            for(Artist a : foundArtists){
+                System.out.println(a.getFirstName() + " " + a.getLastName());
+            }
 
             transaction.commit();
 
