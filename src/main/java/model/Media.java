@@ -23,6 +23,9 @@ public class Media {
     @JoinColumn(name="artist_id")
     private Artist artist;
 
+    public Media() {
+    }
+
     public Media(MediaId id) {
         this.name = id.name;
         this.type = id.type;

@@ -39,12 +39,18 @@ public class Entry {
             em.persist(manager2);
             em.persist(media);
 
-
             Media mediaFounded = em.find(Media.class, new MediaId("insoportable", MediaType.CD));
             System.out.println("Media founded: " + mediaFounded.getName()+ " " + mediaFounded.getArtist().getBandName());
 
             Manager managerToDelete = em.find(Manager.class, manager2.id);
             em.remove(managerToDelete);
+
+            Media m = new Media(new MediaId("besos", MediaType.DVD));
+            m.setArtist(artist);
+            Media m2 = em.merge(m);
+            System.out.println(m2.getName());
+
+
 
             transaction.commit();
 
