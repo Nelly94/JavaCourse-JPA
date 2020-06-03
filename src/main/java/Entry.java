@@ -1,6 +1,9 @@
 import model.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +82,15 @@ public class Entry {
             namedQuery.setParameter("instrumentType", InstrumentType.PERCUSSION);
             List<Artist> foundArtists2 = query.getResultList();
             for(Artist a : foundArtists2){
+                System.out.println(a.getFirstName() + " " + a.getLastName());
+            }
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Artist> cq = cb.createQuery(Artist.class);
+            Root<Artist> root = cq.from(Artist.class);
+            cq.select(root);
+            List<Artist> artists = em.createQuery(cq).getResultList();
+            for(Artist a : artists){
                 System.out.println(a.getFirstName() + " " + a.getLastName());
             }
 
