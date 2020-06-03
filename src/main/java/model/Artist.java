@@ -1,5 +1,7 @@
 package model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,11 @@ import java.util.List;
 @Entity
 @Table(name="ARTIST")
 @NamedQuery(name = "findByFavInstrumentType", query = "select a from Artist a where a.favouriteInstrument.type = :instrumentType")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Artist extends Person{
 
     @Column(name="band_name")
@@ -17,6 +24,7 @@ public class Artist extends Person{
 
     @ManyToOne
     @JoinColumn(name="manager_id")
+    @EqualsAndHashCode.Exclude
     private Manager manager;
 
     @ManyToOne
@@ -42,51 +50,4 @@ public class Artist extends Person{
         this.bandName = bandName;
     }
 
-    public String getBandName() {
-        return bandName;
-    }
-
-    public void setBandName(String bandName) {
-        this.bandName = bandName;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
-    public Instrument getFavouriteInstrument() {
-        return favouriteInstrument;
-    }
-
-    public void setFavouriteInstrument(Instrument favouriteInstrument) {
-        this.favouriteInstrument = favouriteInstrument;
-    }
-
-    public List<Instrument> getPlayableInstruments() {
-        return playableInstruments;
-    }
-
-    public void setPlayableInstruments(List<Instrument> playableInstruments) {
-        this.playableInstruments = playableInstruments;
-    }
-
-    public SacemRegistration getSacemRegistration() {
-        return sacemRegistration;
-    }
-
-    public void setSacemRegistration(SacemRegistration sacemRegistration) {
-        this.sacemRegistration = sacemRegistration;
-    }
 }
