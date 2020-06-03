@@ -1,14 +1,15 @@
-import model.*;
-
-import javax.persistence.*;
-import javax.persistence.criteria.*;
-import java.util.Date;
-import java.util.List;
+import dao.ArtistImplDAO;
+import model.Artist;
 
 public class Entry {
 
     public static void main(String[] args){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpatraining");
+
+        ArtistImplDAO artistDao = new ArtistImplDAO();
+        Artist artist = new Artist("Jared", "Leto", "30 Seconds to mars");
+        artistDao.create(artist);
+
+        /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpatraining");
         EntityManager em = emf.createEntityManager();
 
         Artist artist = new Artist("Dani", "Martin", "El canto del loco");
@@ -105,7 +106,7 @@ public class Entry {
         }finally{
             em.close();
             emf.close();
-        }
+        }*/
 
     }
 }
