@@ -67,7 +67,24 @@ public class ArtistImplDAO implements ArtistDAO {
 
     @Override
     public void update(Artist entity) {
-        //TODO
+        EntityTransaction tx = null;
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            em.merge(entity);
+            tx.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            if(tx != null){
+                tx.rollback();
+            }
+        }finally{
+            if(em != null && em.isOpen()){
+                em.close();
+            }
+        }
     }
 
     @Override
@@ -94,7 +111,10 @@ public class ArtistImplDAO implements ArtistDAO {
 
     @Override
     public void deleteByKey(Long id) {
-        //TODO
+        Artist artist = findById(id);
+        if(artist != null){
+            delete(artist);
+        }
     }
 
     @Override
