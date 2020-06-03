@@ -1,9 +1,7 @@
 import model.*;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.List;
 
@@ -86,10 +84,14 @@ public class Entry {
             }
 
             CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Artist> cq = cb.createQuery(Artist.class);
-            Root<Artist> root = cq.from(Artist.class);
-            cq.select(root);
-            List<Artist> artists = em.createQuery(cq).getResultList();
+            CriteriaQuery<Artist> criteriaQuery = cb.createQuery(Artist.class);
+            Root<Artist> itemRoot = criteriaQuery.from(Artist.class);
+            Join<Artist, Instrument> instrumentJoin = itemRoot.join("playableInstruments");
+
+            Predicate predicate = cb.equal(instrumentJoin.get("type"), InstrumentType.STRING);
+            List<Artist> artists = em.createQuery(criteriaQuery.where(predicate).distinct(true)).getResultList();
+            //criteriaQuery.select(itemRoot);
+            //List<Artist> artists = em.createQuery(criteriaQuery).getResultList();
             for(Artist a : artists){
                 System.out.println(a.getFirstName() + " " + a.getLastName());
             }
